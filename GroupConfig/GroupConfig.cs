@@ -1,11 +1,7 @@
-﻿using Microsoft.Data.Sqlite;
-using TerrariaApi.Server;
+﻿using TerrariaApi.Server;
 using TShockAPI;
 using Terraria;
-using Microsoft.Xna.Framework;
 using TShockAPI.Hooks;
-using System.Data;
-using IL.OTAPI;
 
 namespace GroupConfig
 {
@@ -17,7 +13,7 @@ namespace GroupConfig
         public override string Name => "GroupConfig";
         public override Version Version => new Version(1, 0, 0);
 
-        private static GroupConfig.Config config;
+        private static GroupConfig.Config? config;
 
         public GroupConfigPlugin(Main game) : base(game)
         {

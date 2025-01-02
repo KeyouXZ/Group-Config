@@ -1,29 +1,32 @@
 using Newtonsoft.Json;
 using TShockAPI;
 
-namespace GroupConfig {
+namespace GroupConfig
+{
     public class Config
     {
-        
         public Dictionary<string, Group> Groups { get; set; } = new Dictionary<string, Group>();
-        public static Config Read() {
-            string configPath = Path.Combine(TShock.SavePath, "GroupConfig.json");
+        public static Config Read()
+        {
+            try
+            {
+                string configPath = Path.Combine(TShock.SavePath, "GroupConfig.json");
+                Config config = new Config().defaultConfig();
 
-            try {
-				Config config = new Config().defaultConfig();
+                if (!File.Exists(configPath))
+                {
+                    File.WriteAllText(configPath, JsonConvert.SerializeObject(config, Formatting.Indented));
+                }
+                config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configPath)) ?? new Config();
 
-				if (!File.Exists(configPath)) {
-					File.WriteAllText(configPath, JsonConvert.SerializeObject(config, Formatting.Indented));
-				}
-				config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(configPath)) ?? new Config();
+                return config;
+            }
 
-				return config;
-			}
-			
-			catch (Exception ex) {
-				TShock.Log.ConsoleError(ex.ToString());
-				return new Config();
-			}
+            catch (Exception ex)
+            {
+                TShock.Log.ConsoleError(ex.ToString());
+                return new Config();
+            }
         }
 
         private Config defaultConfig()
@@ -53,7 +56,7 @@ namespace GroupConfig {
             public string Command { get; set; } = string.Empty;
 
             [JsonProperty("Chat Color")]
-            public int[] ChatColor { get; set; } = new int[]{};
+            public int[] ChatColor { get; set; } = new int[] { };
 
             [JsonProperty("Prefix")]
             public string Prefix { get; set; } = string.Empty;
