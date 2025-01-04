@@ -11,7 +11,7 @@ namespace GroupConfig
         public override string Author => "Keyou";
         public override string Description => "Easily configure groups.";
         public override string Name => "GroupConfig";
-        public override Version Version => new Version(1, 0, 0);
+        public override Version Version => new Version(1, 0, 1);
 
         private static GroupConfig.Config? config;
 
