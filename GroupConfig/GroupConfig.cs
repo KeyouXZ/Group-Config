@@ -28,6 +28,7 @@ namespace GroupConfig
 
         public void PostInitialize(EventArgs e)
         {
+            config?.RewriteConfig();
             LoadGroup();
             TShock.Log.ConsoleInfo("[Group Config] has been loaded.");
         }
@@ -35,6 +36,7 @@ namespace GroupConfig
         public void OnReload(ReloadEventArgs e)
         {
             config = GroupConfig.Config.Read();
+            config.RewriteConfig();
             LoadGroup();
             TShock.Log.ConsoleInfo("[Group Config] has been reloaded.");
         }

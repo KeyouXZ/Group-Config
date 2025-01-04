@@ -7,6 +7,7 @@ GroupConfig is a plugin for TShock that allows you to manage and configure group
 - Load and configure groups from a JSON file.
 - Set chat colors, prefixes, and suffixes for groups.
 - Manage group permissions.
+- Blacklist group.
 
 ## Installation
 
@@ -22,6 +23,10 @@ The configuration file `GroupConfig.json` will be generated in the TShock save p
 
 ```json
 {
+  "Blacklist": [
+    "rank_*",
+    "superadmin"
+  ],
   "Groups": {
     "admin": {
       "Parent": "newadmin",
