@@ -11,7 +11,7 @@ namespace GroupConfig
         public override string Author => "Keyou";
         public override string Description => "Easily configure groups.";
         public override string Name => "GroupConfig";
-        public override Version Version => new Version(1, 0, 1);
+        public override Version Version => new Version(1, 0, 2);
 
         private static GroupConfig.Config? config;
 
@@ -46,7 +46,7 @@ namespace GroupConfig
             int counter = 1;
             if (config == null || config.Groups == null)
             {
-                TShock.Log.ConsoleError("Config for Groups is null.");
+                TShock.Log.ConsoleError("[Group Config] Config for Groups is null.");
                 return;
             }
 
@@ -61,18 +61,23 @@ namespace GroupConfig
                 string suffix = key.Value.Suffix ?? "";
 
                 counter++;
-
                 var group = TShock.Groups.GetGroupByName(name);
-                if (group != null)
+                if (group == null)
                 {
-                    group.ChatColor = chatColor;
-                    group.Permissions = permissions;
-                    group.Prefix = prefix;
-                    group.Suffix = suffix;
+                    TShock.Log.ConsoleWarn("[Group Config] Group not found: " + name);
                 }
                 else
                 {
-                    TShock.Log.ConsoleWarn("Group not found: " + name);
+                    if (name == "superadmin")
+                    {
+                        group.Prefix = prefix;
+                        group.Suffix = suffix;
+                        group.ChatColor = chatColor;
+                    }
+                    else
+                    {
+                        TShock.Groups.UpdateGroup(name, parent, permissions, chatColor, suffix, prefix);
+                    }
                 }
             }
         }
